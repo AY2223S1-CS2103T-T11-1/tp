@@ -3,24 +3,59 @@ package seedu.address.model.item;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import seedu.address.model.item.exceptions.ItemCannotBeParentException;
+import seedu.address.storage.JsonAdaptedDisplayItem;
+import seedu.address.storage.JsonAdaptedGroup;
 
 /**
  * Abstract class to represent an item that can contain other items.
  */
 public abstract class AbstractContainerItem extends DisplayItemList<DisplayItem> implements DisplayItem {
 
-    protected AbstractContainerItem parent = null;
+    protected AbstractContainerItem parent;
     protected String name;
-    protected String fullPath = null;
+    protected String fullPath;
+    protected UUID uid;
 
-    protected AbstractContainerItem(String name, AbstractContainerItem parent) {
+    protected AbstractContainerItem(String name, AbstractContainerItem parent, UUID uid) {
+        this(name, parent, null, uid);
+    }
+
+    protected AbstractContainerItem(String name, AbstractContainerItem parent, String fullPath,
+        UUID uid) {
         this.name = name;
         this.parent = parent;
+        this.fullPath = fullPath;
+        this.uid = uid;
+    }
+
+    public AbstractContainerItem getParent() {
+        return parent;
+    }
+
+    public String getParentUid() {
+        if (parent == null) {
+            return "";
+        }
+        return parent.getUid();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public String getUid() {
+        return uid.toString();
     }
 
     @Override
@@ -88,10 +123,6 @@ public abstract class AbstractContainerItem extends DisplayItemList<DisplayItem>
         }
         parent = (AbstractContainerItem) o;
         regenerateFullPathName();
-    }
-
-    public AbstractContainerItem getParent() {
-        return parent;
     }
 
     @Override

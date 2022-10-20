@@ -1,11 +1,14 @@
 package seedu.address.model.task;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import seedu.address.model.item.AbstractContainerItem;
 import seedu.address.model.item.DisplayItem;
 import seedu.address.model.item.EntryType;
 import seedu.address.model.item.exceptions.ItemCannotBeParentException;
+import seedu.address.storage.JsonAdaptedDisplayItem;
+import seedu.address.storage.JsonAdaptedTask;
 
 /**
  * Stores task details.
@@ -15,6 +18,7 @@ public class Task implements DisplayItem {
     private final String title;
     private final String description;
     private final LocalDateTime completedTime;
+    private final UUID uid;
 
     private AbstractContainerItem parent;
 
@@ -39,6 +43,19 @@ public class Task implements DisplayItem {
         this.title = title;
         this.description = description;
         this.completedTime = completedTime;
+        this.uid = UUID.fromString(title); //TODO maybe not title
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getUid() {
+        return uid.toString();
+    }
+
+    public String getParentUid() {
+        return parent.getUid();
     }
 
     /**

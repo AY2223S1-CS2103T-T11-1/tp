@@ -4,6 +4,11 @@ import seedu.address.model.item.AbstractContainerItem;
 import seedu.address.model.item.DisplayItem;
 import seedu.address.model.item.EntryType;
 import seedu.address.model.task.Task;
+import seedu.address.storage.JsonAdaptedDisplayItem;
+import seedu.address.storage.JsonAdaptedGroup;
+
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 /**
  * Represents a Group in the address book.
@@ -19,7 +24,11 @@ public class Group extends AbstractContainerItem {
     }
 
     public Group(String groupName, Group parent) {
-        super(groupName, parent);
+        this(groupName, parent, null, UUID.nameUUIDFromBytes(groupName.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    public Group(String groupName, Group parent, String fullPath, UUID uid) {
+        super(groupName, parent, fullPath, uid);
     }
 
     /**
