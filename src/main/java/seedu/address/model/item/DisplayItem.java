@@ -37,4 +37,10 @@ public interface DisplayItem {
     boolean isPartOfContext(DisplayItem o);
 
 //    List<Fields> getAttributes();
+
+    String getUid();
+
+    String getParentUid();
+
+    String getTitle();
 }

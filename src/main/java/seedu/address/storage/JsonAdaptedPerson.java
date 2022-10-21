@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.item.AbstractContainerItem;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Fields;
@@ -23,26 +24,25 @@ class JsonAdaptedPerson extends JsonAdaptedDisplayItem {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     private final String name;
-    private final String phone;
-    private final String email;
-    private final String address;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
-    private final List<Object> str = List.of(List.of("attr","asdfasdf"), Map.of("df","asdf","asdf","dsfad"));
+    private final Set<JsonAdaptedAbstractContainerItem> parents = new HashSet<>();
+    private final JsonAdaptedFields fields;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("tagged") List<JsonAdaptedTag> tagged,
+            @JsonProperty("parents") HashSet<JsonAdaptedAbstractContainerItem> parents,
+            @JsonProperty("fields") JsonAdaptedFields fields) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
+        if (parents != null) {
+            this.parents.addAll(parents);
+        }
+        this.fields = fields;
     }
 
     /**
@@ -50,12 +50,13 @@ class JsonAdaptedPerson extends JsonAdaptedDisplayItem {
      */
     public JsonAdaptedPerson(Person source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        parents.addAll(source.getParents().stream()
+                .map(JsonAdaptedAbstractContainerItem::new)
+                .collect(Collectors.toSet()));
+        fields = new JsonAdaptedFields(source.getFields());
     }
 
     /**
@@ -77,33 +78,34 @@ class JsonAdaptedPerson extends JsonAdaptedDisplayItem {
         }
         final Name modelName = new Name(name);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
-        }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
-        }
-        final Phone modelPhone = new Phone(phone);
-
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
-        final Email modelEmail = new Email(email);
-
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-        final Address modelAddress = new Address(address);
+//        if (phone == null) {
+//            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+//        }
+//        if (!Phone.isValidPhone(phone)) {
+//            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+//        }
+//        final Phone modelPhone = new Phone(phone);
+//
+//        if (email == null) {
+//            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+//        }
+//        if (!Email.isValidEmail(email)) {
+//            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+//        }
+//        final Email modelEmail = new Email(email);
+//
+//        if (address == null) {
+//            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+//        }
+//        if (!Address.isValidAddress(address)) {
+//            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+//        }
+//        final Address modelAddress = new Address(address);
 
         // dummy fields
         final Fields modelFields = new Fields();
-
+        final Set<AbstractContainerItem> modelParents = parents.stream().map(item -> item.toModelType())
+                .collect(Collectors.toSet());
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelFields);
     }

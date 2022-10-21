@@ -15,6 +15,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -28,7 +29,7 @@ class JsonSerializableAddressBook {
     private final List<JsonAdaptedGroup> groups = new ArrayList<>();
     private final List<JsonAdaptedTask> tasks = new ArrayList<>();
 
-    // Instructions for assembling of nested teams and tasks.
+    // Instructions for assembling of nested teams and tasks. Notes child to parent pairing.
     private final Map<String, String> parentHierarchy = new HashMap<>();
 
     /**
@@ -41,7 +42,7 @@ class JsonSerializableAddressBook {
         this.persons.addAll(persons);
         this.groups.addAll(groups);
         this.tasks.addAll(tasks);
-//        this.parentHierarchy = parentHierarchy;
+        this.parentHierarchy = parentHierarchy;
     }
 
     /**
@@ -53,6 +54,7 @@ class JsonSerializableAddressBook {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
         groups.addAll(source.getTeamsList().stream().map(JsonAdaptedGroup::new).collect(Collectors.toList()));
         tasks.addAll(source.getTasksList().stream().map(JsonAdaptedTask::new).collect(Collectors.toList()));
+        source.getTeamsList().stream().map()
     }
 
     /**
@@ -79,9 +81,17 @@ class JsonSerializableAddressBook {
             addressBook.addTeam(group);
         }
 
+        for (JsonAdaptedTask jsonAdaptedTask : tasks) {
+            Task task = jsonAdaptedTask.toModelType();
+
+            addressBook.addTask(task);
+        }
+
         return addressBook;
     }
 
+//    private void addParentChildPairing()
+//
 //    private void addDisplayItemToAddressBook(List<JsonAdaptedDisplayItem> items) throws IllegalValueException {
 //        for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
 //            Person person = jsonAdaptedPerson.toModelType();

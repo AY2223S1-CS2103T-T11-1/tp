@@ -1,5 +1,6 @@
 package seedu.address.model.task;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -43,17 +44,20 @@ public class Task implements DisplayItem {
         this.title = title;
         this.description = description;
         this.completedTime = completedTime;
-        this.uid = UUID.fromString(title); //TODO maybe not title
+        this.uid = UUID.nameUUIDFromBytes(title.getBytes(StandardCharsets.UTF_8));
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public String getUid() {
         return uid.toString();
     }
 
+    @Override
     public String getParentUid() {
         return parent.getUid();
     }

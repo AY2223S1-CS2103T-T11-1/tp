@@ -61,6 +61,10 @@ public class Person implements DisplayItem {
         return address;
     }
 
+    public Set<AbstractContainerItem> getParents() {
+        return parents;
+    }
+
     /**
      * Returns an immutable tag set, which throws
      * {@code UnsupportedOperationException}

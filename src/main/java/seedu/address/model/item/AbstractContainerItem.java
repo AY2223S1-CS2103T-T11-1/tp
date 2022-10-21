@@ -39,6 +39,7 @@ public abstract class AbstractContainerItem extends DisplayItemList<DisplayItem>
         return parent;
     }
 
+    @Override
     public String getParentUid() {
         if (parent == null) {
             return "";
@@ -46,7 +47,8 @@ public abstract class AbstractContainerItem extends DisplayItemList<DisplayItem>
         return parent.getUid();
     }
 
-    public String getName() {
+    @Override
+    public String getTitle() {
         return name;
     }
 
@@ -54,6 +56,7 @@ public abstract class AbstractContainerItem extends DisplayItemList<DisplayItem>
         return fullPath;
     }
 
+    @Override
     public String getUid() {
         return uid.toString();
     }
