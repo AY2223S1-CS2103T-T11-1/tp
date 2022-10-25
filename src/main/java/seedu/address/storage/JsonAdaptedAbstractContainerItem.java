@@ -1,35 +1,18 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.item.AbstractContainerItem;
+import java.util.List;
 
-public class JsonAdaptedAbstractContainerItem extends JsonAdaptedDisplayItem {
+public class JsonAdaptedAbstractContainerItem extends JsonAdaptedAbstractDisplayItem {
 
-    private final String parentUid;
     private final String fullPath;
-    private final String uid;
 
-    public JsonAdaptedAbstractContainerItem(AbstractContainerItem containerItem) {
-        super(containerItem.getName());
-        this.parentUid = containerItem.getParentUid();
-        this.fullPath = containerItem.getFullPathName();
-        this.uid = containerItem.getUid();
-    }
-
-    public JsonAdaptedAbstractContainerItem(String name, String fullPath, String parentUid, String uid) {
-        super(name);
-        this.parentUid = parentUid;
+    public JsonAdaptedAbstractContainerItem(List<JsonAdaptedAttribute> attributes, String uid,
+                                            List<JsonAdaptedTag> tagged, String fullPath) {
+        super(attributes, uid, tagged);
         this.fullPath = fullPath;
-        this.uid = uid;
     }
 
-    /**
-     * Converts this Jackson-friendly adapted abstract container item object into the model's
-     * {@code AbstractContainerItem} object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted abstract container item.
-     */
-    public AbstractContainerItem toModelType() {
-
+    public String getFullPath() {
+        return fullPath;
     }
 }

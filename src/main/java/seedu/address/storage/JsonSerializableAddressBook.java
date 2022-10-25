@@ -26,19 +26,19 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_PERSON = "Person list contains duplicate display items(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
-    private final List<JsonAdaptedTeam> teams = new ArrayList<>();
+    private final List<JsonAdaptedGroup> teams = new ArrayList<>();
     private final List<JsonAdaptedTask> tasks = new ArrayList<>();
 
     // Instructions for assembling of nested teams and tasks. Notes child to parent pairing.
-    private final Map<String, String> parentHierarchy = new HashMap<>();
+    private final Map<String, List<String>> parentHierarchy = new HashMap<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
-                                       @JsonProperty("teams") List<JsonAdaptedTeam> groups, @JsonProperty("tasks") List<JsonAdaptedTask> tasks,
-                                       @JsonProperty("hierarchy") Map<String, String> parentHierarchy) {
+                                       @JsonProperty("teams") List<JsonAdaptedGroup> groups, @JsonProperty("tasks") List<JsonAdaptedTask> tasks,
+                                       @JsonProperty("hierarchy") Map<String, List<String>> parentHierarchy) {
         this.persons.addAll(persons);
         this.teams.addAll(groups);
         this.tasks.addAll(tasks);
@@ -52,9 +52,9 @@ class JsonSerializableAddressBook {
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
-        teams.addAll(source.getTeamsList().stream().map(JsonAdaptedTeam::new).collect(Collectors.toList()));
+        teams.addAll(source.getTeamsList().stream().map(JsonAdaptedGroup::new).collect(Collectors.toList()));
         tasks.addAll(source.getTasksList().stream().map(JsonAdaptedTask::new).collect(Collectors.toList()));
-        source.getTeamsList().stream().map()
+
     }
 
     /**
@@ -73,8 +73,8 @@ class JsonSerializableAddressBook {
             addressBook.addPerson(person);
         }
 
-        for (JsonAdaptedTeam jsonAdaptedTeam : teams) {
-            Group group = jsonAdaptedTeam.toModelType();
+        for (JsonAdaptedGroup jsonAdaptedGroup : teams) {
+            Group group = jsonAdaptedGroup.toModelType();
 //            if (addressBook.hasGroup(group)) {
 //                throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
 //            }
@@ -90,15 +90,7 @@ class JsonSerializableAddressBook {
         return addressBook;
     }
 
-//    private void addParentChildPairing()
-//
-//    private void addDisplayItemToAddressBook(List<JsonAdaptedDisplayItem> items) throws IllegalValueException {
-//        for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
-//            Person person = jsonAdaptedPerson.toModelType();
-//            if (addressBook.hasPerson(person)) {
-//                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
-//            }
-//            addressBook.addPerson(person);
-//        }
-//    }
+    private void addToParentHierarchy(List<JsonAdaptedAbstractDisplayItem> displayItemList) {
+
+    }
 }

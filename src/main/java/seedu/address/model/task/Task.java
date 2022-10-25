@@ -5,18 +5,17 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import seedu.address.model.item.AbstractContainerItem;
+import seedu.address.model.item.AbstractDisplayItem;
 import seedu.address.model.item.DisplayItem;
 import seedu.address.model.item.EntryType;
 import seedu.address.model.item.exceptions.ItemCannotBeParentException;
-import seedu.address.storage.JsonAdaptedDisplayItem;
-import seedu.address.storage.JsonAdaptedTask;
+import seedu.address.model.person.Name;
 
 /**
  * Stores task details.
  */
-public class Task implements DisplayItem {
+public class Task extends AbstractDisplayItem {
 
-    private final String title;
     private final String description;
     private final LocalDateTime completedTime;
     private final UUID uid;
@@ -29,31 +28,25 @@ public class Task implements DisplayItem {
      * @param title       The title of the task.
      * @param description The description of the task.
      */
-    public Task(String title, String description) {
-        this(title, description, null);
+    public Task(Name name, String description) {
+        this(name, description, null);
     }
 
     /**
      * Create a new task with a completed_time.
      *
-     * @param title         The title of the task.
      * @param description   The description of the task.
      * @param completedTime The completed_time of the task.
      */
-    public Task(String title, String description, LocalDateTime completedTime) {
-        this(title, description, completedTime, UUID.nameUUIDFromBytes(title.getBytes(StandardCharsets.UTF_8)));
+    public Task(Name name, String description, LocalDateTime completedTime) {
+        this(name, description, completedTime, UUID.nameUUIDFromBytes(Name.getName().fullName.getBytes(StandardCharsets.UTF_8)));
     }
 
-    public Task(String title, String description, LocalDateTime completedTime, UUID uid) {
-        this.title = title;
+    public Task(Name name, String description, LocalDateTime completedTime, UUID uid) {
+        super(name);
         this.description = description;
         this.completedTime = completedTime;
         this.uid = uid;
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
     }
 
     @Override

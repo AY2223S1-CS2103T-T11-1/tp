@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.item.AbstractContainerItem;
+import seedu.address.model.item.AbstractDisplayItem;
 import seedu.address.model.item.DisplayItem;
 import seedu.address.model.item.EntryType;
 import seedu.address.model.item.exceptions.ItemCannotBeParentException;
@@ -18,7 +19,7 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated,
  * immutable.
  */
-public class Person implements DisplayItem {
+public class Person extends AbstractDisplayItem {
 
     // Identity fields
     private final Name name;
