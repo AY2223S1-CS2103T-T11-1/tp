@@ -4,8 +4,6 @@ import seedu.address.model.item.AbstractContainerItem;
 import seedu.address.model.item.DisplayItem;
 import seedu.address.model.item.EntryType;
 import seedu.address.model.task.Task;
-import seedu.address.storage.JsonAdaptedDisplayItem;
-import seedu.address.storage.JsonAdaptedGroup;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;

@@ -41,10 +41,14 @@ public class Task implements DisplayItem {
      * @param completedTime The completed_time of the task.
      */
     public Task(String title, String description, LocalDateTime completedTime) {
+        this(title, description, completedTime, UUID.nameUUIDFromBytes(title.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    public Task(String title, String description, LocalDateTime completedTime, UUID uid) {
         this.title = title;
         this.description = description;
         this.completedTime = completedTime;
-        this.uid = UUID.nameUUIDFromBytes(title.getBytes(StandardCharsets.UTF_8));
+        this.uid = uid;
     }
 
     @Override

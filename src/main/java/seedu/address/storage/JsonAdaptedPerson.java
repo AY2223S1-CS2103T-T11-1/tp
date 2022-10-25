@@ -23,7 +23,6 @@ class JsonAdaptedPerson extends JsonAdaptedDisplayItem {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
-    private final String name;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
     private final Set<JsonAdaptedAbstractContainerItem> parents = new HashSet<>();
     private final JsonAdaptedFields fields;
@@ -32,10 +31,9 @@ class JsonAdaptedPerson extends JsonAdaptedDisplayItem {
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("tagged") List<JsonAdaptedTag> tagged,
+    public JsonAdaptedPerson(@JsonProperty("tagged") List<JsonAdaptedTag> tagged,
             @JsonProperty("parents") HashSet<JsonAdaptedAbstractContainerItem> parents,
             @JsonProperty("fields") JsonAdaptedFields fields) {
-        this.name = name;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
@@ -49,7 +47,7 @@ class JsonAdaptedPerson extends JsonAdaptedDisplayItem {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
-        name = source.getName().fullName;
+        super(source.getName().fullName);
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -70,13 +68,13 @@ class JsonAdaptedPerson extends JsonAdaptedDisplayItem {
             personTags.add(tag.toModelType());
         }
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
-        }
-        final Name modelName = new Name(name);
+//        if (name == null) {
+//            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+//        }
+//        if (!Name.isValidName(name)) {
+//            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+//        }
+//        final Name modelName = new Name(name);
 
 //        if (phone == null) {
 //            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));

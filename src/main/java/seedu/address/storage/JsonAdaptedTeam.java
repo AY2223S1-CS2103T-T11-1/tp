@@ -6,42 +6,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Group;
 import seedu.address.model.item.AbstractContainerItem;
-import seedu.address.model.person.*;
-import seedu.address.model.tag.Tag;
 
-import java.util.*;
 import java.util.stream.Collectors;
 
-public class JsonAdaptedGroup extends JsonAdaptedDisplayItem {
+public class JsonAdaptedTeam extends JsonAdaptedAbstractContainerItem {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Group's %s field is missing!";
-
-    private final String parentUid;
-    private final String groupName;
-    private final String fullPath;
-    private final String uid;
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Team's %s field is missing!";
 
     /**
-     * Constructs a {@code JsonAdaptedGroup} with the given person details.
+     * Constructs a {@code JsonAdaptedTeam} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedGroup(@JsonProperty("parent") String parentUid,
-        @JsonProperty("groupName") String groupName, @JsonProperty("fullPath") String fullPath,
-        @JsonProperty("uid") String uid) {
-        this.parentUid = parentUid;
-        this.groupName = groupName;
-        this.fullPath = fullPath;
-        this.uid = uid;
+    public JsonAdaptedTeam(@JsonProperty("teamName") String teamName, @JsonProperty("fullPath") String fullPath,
+                           @JsonProperty("parent") String parentUid, @JsonProperty("uid") String uid) {
+        super(teamName, fullPath, parentUid, uid);
     }
 
     /**
      * Converts a given {@code Group} into this class for Jackson use.
      */
-    public JsonAdaptedGroup(Group source) {
-        parentUid = source.getParentUid();
-        this.groupName = source.getName();
-        this.fullPath = source.getFullPath();
-        this.uid = source.getUid();
+    public JsonAdaptedTeam(Group source) {
+        super(source.getName(), source.getFullPathName(), source.getParentUid(), source.getUid());
     }
 
     /**

@@ -26,7 +26,7 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_PERSON = "Person list contains duplicate display items(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
-    private final List<JsonAdaptedGroup> groups = new ArrayList<>();
+    private final List<JsonAdaptedTeam> teams = new ArrayList<>();
     private final List<JsonAdaptedTask> tasks = new ArrayList<>();
 
     // Instructions for assembling of nested teams and tasks. Notes child to parent pairing.
@@ -37,10 +37,10 @@ class JsonSerializableAddressBook {
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
-            @JsonProperty("groups") List<JsonAdaptedGroup> groups, @JsonProperty("tasks") List<JsonAdaptedTask> tasks,
-            @JsonProperty("hierarchy") Map<String, String> parentHierarchy) {
+                                       @JsonProperty("teams") List<JsonAdaptedTeam> groups, @JsonProperty("tasks") List<JsonAdaptedTask> tasks,
+                                       @JsonProperty("hierarchy") Map<String, String> parentHierarchy) {
         this.persons.addAll(persons);
-        this.groups.addAll(groups);
+        this.teams.addAll(groups);
         this.tasks.addAll(tasks);
         this.parentHierarchy = parentHierarchy;
     }
@@ -52,7 +52,7 @@ class JsonSerializableAddressBook {
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
-        groups.addAll(source.getTeamsList().stream().map(JsonAdaptedGroup::new).collect(Collectors.toList()));
+        teams.addAll(source.getTeamsList().stream().map(JsonAdaptedTeam::new).collect(Collectors.toList()));
         tasks.addAll(source.getTasksList().stream().map(JsonAdaptedTask::new).collect(Collectors.toList()));
         source.getTeamsList().stream().map()
     }
@@ -73,8 +73,8 @@ class JsonSerializableAddressBook {
             addressBook.addPerson(person);
         }
 
-        for (JsonAdaptedGroup jsonAdaptedGroup : groups) {
-            Group group = jsonAdaptedGroup.toModelType();
+        for (JsonAdaptedTeam jsonAdaptedTeam : teams) {
+            Group group = jsonAdaptedTeam.toModelType();
 //            if (addressBook.hasGroup(group)) {
 //                throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
 //            }

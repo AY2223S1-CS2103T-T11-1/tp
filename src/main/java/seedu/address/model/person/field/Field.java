@@ -26,10 +26,7 @@ public class Field {
      * @param name The name of the field.
      */
     public Field(String name) {
-        requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
-        this.name = name;
-        this.value = null;
+        this(name, null);
     }
 
     /**

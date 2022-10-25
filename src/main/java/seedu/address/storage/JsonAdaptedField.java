@@ -11,17 +11,14 @@ public class JsonAdaptedField {
 
     private final String name;
     private final String content;
-    private final String other;
 
     /**
      * Constructs a {@code JsonAdaptedField} with the given field details.
      */
     @JsonCreator
-    public JsonAdaptedField(@JsonProperty("name") String name, @JsonProperty("content") String content,
-                                  @JsonProperty("other") String other) {
+    public JsonAdaptedField(@JsonProperty("name") String name, @JsonProperty("content") String content) {
         this.name = name;
         this.content = content;
-        this.other = other;
     }
 
     /**
@@ -30,7 +27,6 @@ public class JsonAdaptedField {
     public JsonAdaptedField(Field source) {
         name = source.name;
         content = source.value;
-        other = "";
     }
 
     /**

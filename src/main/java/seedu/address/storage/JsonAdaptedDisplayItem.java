@@ -17,19 +17,15 @@ import seedu.address.model.item.DisplayItem;
  */
 public abstract class JsonAdaptedDisplayItem {
 
-//    /**
-//     * Constructs a {@code JsonAdaptedDisplayItem} with the given person details.
-//     */
-//    @JsonCreator
-//    public JsonAdaptedDisplayItem(@JsonProperty("name") String name, @JsonProperty("content") String content,
-//            @JsonProperty("other") String other) {
-//    }
-//
-//    /**
-//     * Converts a given {@code Person} into this class for Jackson use.
-//     */
-//    public JsonAdaptedDisplayItem(DisplayItem source) {
-//    }
+    private final String title;
+
+    public JsonAdaptedDisplayItem(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 
 }
 

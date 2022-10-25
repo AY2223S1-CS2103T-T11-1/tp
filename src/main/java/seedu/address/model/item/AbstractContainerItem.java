@@ -3,15 +3,12 @@ package seedu.address.model.item;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 import seedu.address.model.item.exceptions.ItemCannotBeParentException;
-import seedu.address.storage.JsonAdaptedDisplayItem;
-import seedu.address.storage.JsonAdaptedGroup;
 
 /**
  * Abstract class to represent an item that can contain other items.
@@ -50,10 +47,6 @@ public abstract class AbstractContainerItem extends DisplayItemList<DisplayItem>
     @Override
     public String getTitle() {
         return name;
-    }
-
-    public String getFullPath() {
-        return fullPath;
     }
 
     @Override
