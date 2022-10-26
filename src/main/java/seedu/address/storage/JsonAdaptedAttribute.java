@@ -1,9 +1,10 @@
 package seedu.address.storage;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.field.Field;
-import seedu.address.model.tag.Tag;
 
+/**
+ * Jackson-friendly version of {@link Attribute}.
+ */
 class JsonAdaptedAttribute {
 
     private final String attributeTitle;
@@ -11,7 +12,6 @@ class JsonAdaptedAttribute {
 
     JsonAdaptedAttribute(Attribute attribute) {
         attribute.toSaveableFormat();
-        //TODO do something here
         attributeTitle = attribute.getKey();
         content = attribute.getValue();
     }
@@ -26,11 +26,5 @@ class JsonAdaptedAttribute {
             throw new IllegalValueException(Attribute.MESSAGE_CONSTRAINTS);
         }
         return new Attribute(attributeTitle, content);
-
-//        if (!Field.isValidName(name) || !Field.isValidField(content)) {
-//            throw new IllegalValueException(Tag.MESSAGE_CONSTRAINTS);
-//        }
-//
-//        return new Field(name, content);
     }
 }

@@ -23,11 +23,14 @@ class JsonAdaptedPerson extends JsonAdaptedAbstractDisplayItem {
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     *
+     * @param attributes that are part of the current person representation.
+     * @param uid a unique identity that is given to each specific instance.
+     * @param tagged tags on a person.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("attributes") List<JsonAdaptedAttribute> attributes,
-            @JsonProperty("uid") String uid,
-                             @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+            @JsonProperty("uid") String uid, @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         super(attributes, uid, tagged);
     }
 

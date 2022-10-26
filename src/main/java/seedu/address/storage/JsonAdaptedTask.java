@@ -1,16 +1,24 @@
 package seedu.address.storage;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Task;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.*;
-import java.util.stream.Collectors;
-
+/**
+ * Jackson-friendly version of {@link Task}.
+ */
 public class JsonAdaptedTask extends JsonAdaptedAbstractDisplayItem {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Task's %s field is missing!";
@@ -18,7 +26,12 @@ public class JsonAdaptedTask extends JsonAdaptedAbstractDisplayItem {
     private final String completedTime;
 
     /**
-     * Constructs a {@code JsonAdaptedTask} with the given person details.
+     * Constructs a {@code JsonAdaptedTask} with the given task details.
+     *
+     * @param attributes that are part of the current task representation.
+     * @param uid a unique identity that is given to each specific instance.
+     * @param tagged tags on a task.
+     * @param completedTime time that the task has been completed.
      */
     @JsonCreator
     public JsonAdaptedTask(@JsonProperty("attributes") List<JsonAdaptedAttribute> attributes,
