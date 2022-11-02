@@ -176,12 +176,13 @@ public class Task extends AbstractSingleItem {
             throw new ItemCannotBeParentException(o);
         }
 
-        if (o instanceof AbstractSingleItem) {
-            setParentForSingleGrp((AbstractSingleItem) o);
-        }
-
         if (o instanceof Person) {
             setContactParent((Person) o);
+            return;
+        }
+
+        if (o instanceof AbstractSingleItem) {
+            setParentForSingleGrp((AbstractSingleItem) o);
         }
 
     }
@@ -199,7 +200,7 @@ public class Task extends AbstractSingleItem {
         if (o == null) {
             return;
         }
-        if (!assignedParents.contains(o)) {
+        if (assignedParents.contains(o)) {
             throw new ItemCannotBeParentException(o);
         }
 
