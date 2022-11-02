@@ -19,7 +19,7 @@ import seedu.address.model.item.exceptions.ItemCannotBeParentException;
  * Represents a Person in the address book. Guarantees: details are present and not null, field
  * values are validated, immutable.
  */
-public class Person extends AbstractDisplayItem {
+public class Person extends AbstractSingleItem {
 
     private Set<AbstractSingleItem> parents = new HashSet<>();
 
